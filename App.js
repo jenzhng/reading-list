@@ -1,6 +1,7 @@
 import "./App.css";
 import React, { useEffect, useState } from "react";
 import Axios from "axios";
+import { DataGrid } from '@mui/x-data-grid';
 
 function App() {
 	
@@ -21,6 +22,14 @@ function App() {
 		});
 		
 	};
+	
+	const columns = [
+  		{ field: 'id', headerName: 'ID', width: 70 },
+  		{ field: 'name', headerName: 'Name', width: 160 },
+  		{ field: 'title', headerName: 'Title', width: 300 },
+  	];
+	
+	const rows = [];
 	
   return (
 	  
@@ -48,13 +57,21 @@ function App() {
 		</div>
 		
 		{bookTitleList.map((val) => {
-			return (
-				<h1>
-				Book Title: {val.title} | Book Author: {val.name}
-				
-			</h1>
-			);
+			rows.push({id: val.id, title: val.title, name: val.name});
 		})} 
+
+
+		<div className="table">
+		<div style={{ height: 400, width: '50%' }}>
+			<DataGrid
+				rows={rows}
+				columns={columns}
+				pageSize={5}
+				rowsPerPageOptions={[5]}
+				checkboxSelection
+			/>
+		</div>
+		</div>
 	  </div>
   );
 }
