@@ -11,18 +11,19 @@ function App() {
 	
 	useEffect(()=> {
 		Axios.get('http://localhost:5000/api/get').then((response)=> {
-			setBookList(response.data);
+			setBookList(response.data); //retrieves books from the database
 		});
 	}, []);
 	
 	const submitBook = () => {
 		Axios.post('http://localhost:5000/api/insert', {bookTitle: bookTitle, author: author,
 		}).then(() => {
-			alert("successful insert");
+			alert("successful insert"); //adds new book to the database
 		});
 		
 	};
 	
+	//Set columns for table
 	const columns = [
   		{ field: 'id', headerName: 'ID', width: 70 },
   		{ field: 'name', headerName: 'Name', width: 160 },
@@ -36,6 +37,7 @@ function App() {
 	  <div className="App">
 		<h1>Reading List</h1>
 		
+	 	//Form to submit new book to database
 		<div className="form">
 		<label>Book Title:</label>
 		<input 
@@ -55,12 +57,13 @@ function App() {
 		/>
 		<button onClick={submitBook}> Submit </button>
 		</div>
-		
+
+		//Retrieve book list from SQL database
 		{bookTitleList.map((val) => {
 			rows.push({id: val.id, title: val.title, name: val.name});
 		})} 
 
-
+		//Add styling for mui-table of book list
 		<div className="table">
 		<div style={{ height: 400, width: '50%' }}>
 			<DataGrid
